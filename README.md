@@ -1,221 +1,176 @@
-# Todo App - 滴答清单风格的待办事项系统
+# 待办事项系统 (Todo App)
 
-一个现代化的待办事项管理系统，支持任务管理、清单分类、日期提醒、优先级、标签、子任务和重复任务等功能。
+类似滴答清单的任务管理系统 - 支持任务管理、清单分类、优先级、提醒、重复任务等功能。
 
-## 🚀 快速开始
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/chrissphere/todo/ci.yml?branch=main)
+![Docker Pulls](https://img.shields.io/docker/pulls/chrissphere/todo-backend)
+![License](https://img.shields.io/github/license/chrissphere/todo)
 
-### 后端启动
+## ✨ 功能特性
 
-```bash
-cd backend
+### 任务管理
+- ✅ 创建、编辑、删除任务
+- ✅ 任务完成状态切换
+- ✅ 优先级设置（高/中/低）
+- ✅ 截止日期和提醒时间
+- ✅ 子任务支持
+- ✅ 任务排序和拖拽
 
-# 创建虚拟环境
-python -m venv .venv
-source .venv/bin/activate  # Linux/macOS
+### 清单管理
+- 📁 多个清单分类
+- 🎨 自定义颜色和图标
+- 📊 按清单过滤任务
 
-# 安装依赖
-pip install -r requirements.txt
+### 标签系统
+- 🏷️ 多标签分类
+- 🔍 按标签搜索
 
-# 初始化数据库
-python init_db.py
-
-# 启动服务器
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-访问 API 文档：http://localhost:8000/api/v1/docs
-
-### 前端启动（开发中）
-
-```bash
-cd frontend
-
-# 安装依赖
-npm install
-
-# 启动开发服务器
-npm run dev
-```
-
-## 📋 核心功能
-
-### ✅ 任务管理
-- 创建、编辑、删除任务
-- 标记任务完成/未完成
-- 任务详情查看
-- 任务排序
-
-### 📝 清单管理
-- 多个清单分类
-- 系统默认清单（收件箱、今天、下一步、日程表）
-- 自定义清单颜色和图标
-
-### 📅 时间管理
-- 截止日期设置
-- 具体时间设置
-- 提醒功能
-- 重复任务（每天、每周、每月）
-
-### 🎯 优先级系统
-- 四级优先级：高、中、低、无
-- 颜色标识
-- 优先级筛选
-
-### 🏷️ 标签系统
-- 创建和管理标签
-- 标签颜色自定义
-- 跨清单分类
-
-### 📊 子任务
-- 任务分解
-- 进度追踪
-- 独立属性
-
-### 🔍 搜索和过滤
-- 全文搜索
-- 高级筛选
-- 智能视图（今天、过期）
+### 高级功能
+- 🔄 重复任务（每天/每周/每月）
+- 🔔 桌面通知
+- 🌙 深色模式
+- 📱 响应式设计
 
 ## 🛠️ 技术栈
 
 ### 后端
-- **FastAPI** - 现代高性能 Web 框架
-- **SQLAlchemy** - ORM 框架
-- **SQLite** - 数据库（支持切换到 PostgreSQL/MySQL）
-- **Alembic** - 数据库迁移
-- **Pydantic** - 数据验证
+- **框架**: FastAPI
+- **数据库**: SQLite (可切换 PostgreSQL)
+- **ORM**: SQLAlchemy 2.0
+- **迁移**: Alembic
+- **验证**: Pydantic
 
-### 前端（开发中）
-- **Vue 3** - 渐进式 JavaScript 框架
-- **Element Plus** - Vue 3 组件库
-- **Pinia** - 状态管理
-- **Vue Router** - 路由管理
-- **Axios** - HTTP 客户端
+### 前端
+- **框架**: Vue 3 + TypeScript
+- **构建**: Vite
+- **UI**: Element Plus
+- **状态**: Pinia
+- **路由**: Vue Router
 
 ### 部署
-- **Docker** - 容器化部署
-- **Docker Compose** - 多容器编排
+- **容器**: Docker + Docker Compose
+- **CI/CD**: GitHub Actions
+- **镜像**: Docker Hub
+
+## 🚀 快速开始
+
+### 使用 Docker Compose（推荐）
+
+```bash
+# 克隆仓库
+git clone https://github.com/chrissphere/todo.git
+cd todo
+
+# 启动服务
+docker-compose up -d
+
+# 访问应用
+# 前端：http://localhost
+# 后端 API：http://localhost:8000/api/v1
+# API 文档：http://localhost:8000/docs
+```
+
+### 手动运行
+
+**后端：**
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+**前端：**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## 📖 文档
+
+- [部署指南](DEPLOYMENT.md) - 本地开发、生产部署、云平台
+- [API 文档](http://localhost:8000/docs) - Swagger/OpenAPI
+- [数据库设计](docs/02-database-design.md)
+- [开发任务](docs/03-development-tasks.md)
 
 ## 📁 项目结构
 
 ```
-todo-app/
-├── backend/                 # 后端 API
+todo/
+├── backend/              # FastAPI 后端
 │   ├── app/
-│   │   ├── api/            # API 路由
-│   │   ├── core/           # 核心配置
-│   │   ├── crud/           # CRUD 操作
-│   │   ├── models/         # 数据模型
-│   │   ├── schemas/        # Pydantic Schemas
-│   │   └── main.py         # FastAPI 入口
-│   ├── alembic/            # 数据库迁移
-│   ├── requirements.txt    # Python 依赖
-│   └── init_db.py          # 初始化脚本
-├── frontend/               # 前端应用（开发中）
-│   └── src/
-├── docker/                 # Docker 配置（开发中）
-│   └── nginx/
-└── docs/                   # 项目文档
-    ├── 01-requirements-analysis.md
-    ├── 02-database-design.md
-    └── 03-development-tasks.md
+│   │   ├── api/         # API 端点
+│   │   ├── models/      # 数据库模型
+│   │   ├── schemas/     # Pydantic Schemas
+│   │   ├── crud/        # CRUD 操作
+│   │   └── core/        # 配置
+│   ├── alembic/         # 数据库迁移
+│   ├── Dockerfile
+│   └── requirements.txt
+├── frontend/            # Vue3 前端
+│   ├── src/
+│   │   ├── api/        # API 请求
+│   │   ├── views/      # 页面组件
+│   │   ├── stores/     # Pinia stores
+│   │   └── router/     # 路由
+│   ├── Dockerfile
+│   └── package.json
+├── .github/workflows/   # GitHub Actions
+├── docker-compose.yml   # Docker Compose 配置
+├── DEPLOYMENT.md        # 部署文档
+└── docs/                # 项目文档
 ```
 
-## 📖 API 文档
-
-启动后端后访问：
-- Swagger UI: http://localhost:8000/api/v1/docs
-- ReDoc: http://localhost:8000/api/v1/redoc
-- OpenAPI JSON: http://localhost:8000/api/v1/openapi.json
-
-### 主要 API 端点
-
-#### Tasks（任务）
-```
-GET    /api/v1/tasks              # 获取任务列表
-POST   /api/v1/tasks              # 创建任务
-GET    /api/v1/tasks/{id}         # 获取任务详情
-PUT    /api/v1/tasks/{id}         # 更新任务
-PATCH  /api/v1/tasks/{id}/complete # 完成任务
-DELETE /api/v1/tasks/{id}         # 删除任务
-GET    /api/v1/tasks/today        # 今天的任务
-GET    /api/v1/tasks/overdue      # 过期的任务
-GET    /api/v1/tasks/search?q=    # 搜索任务
-```
-
-#### Lists（清单）
-```
-GET    /api/v1/lists              # 获取所有清单
-POST   /api/v1/lists              # 创建清单
-GET    /api/v1/lists/{id}         # 获取清单详情
-PUT    /api/v1/lists/{id}         # 更新清单
-DELETE /api/v1/lists/{id}         # 删除清单
-```
-
-#### Tags（标签）
-```
-GET    /api/v1/tags               # 获取所有标签
-POST   /api/v1/tags               # 创建标签
-PUT    /api/v1/tags/{id}          # 更新标签
-DELETE /api/v1/tags/{id}          # 删除标签
-```
-
-## 🔧 开发指南
-
-### 数据库迁移
-
-```bash
-cd backend
-
-# 创建新迁移
-alembic revision --autogenerate -m "描述"
-
-# 应用迁移
-alembic upgrade head
-
-# 回滚迁移
-alembic downgrade -1
-```
+## 🔧 开发
 
 ### 运行测试
 
 ```bash
+# 后端
 cd backend
-pytest tests/
+pytest
+
+# 前端
+cd frontend
+npm run test
 ```
 
-## 📝 开发进度
+### 代码规范
 
-- [x] 需求分析和功能模块拆解
-- [x] 数据库设计
-- [x] 后端基础架构
-- [x] 后端 API（核心 CRUD）
-- [ ] 后端 API（高级功能）
-- [ ] 前端项目初始化
-- [ ] 前端页面和组件
-- [ ] Docker 配置
-- [ ] 测试和文档
+```bash
+# 后端
+flake8 app
+black app
 
-## 🚧 待实现功能
+# 前端
+npm run lint
+npm run format
+```
 
-### P1 - 核心体验
-- [ ] 子任务功能完善
-- [ ] 任务标签关联 API
-- [ ] 重复任务逻辑实现
-- [ ] 前端界面开发
+## 📦 Docker 镜像
 
-### P2 - 增强功能
-- [ ] 复杂重复规则
-- [ ] 多个提醒
-- [ ] 任务评论
-- [ ] 任务附件
-- [ ] 用户认证系统
-- [ ] 协作功能
+- Backend: `chrissphere/todo-backend:latest`
+- Frontend: `chrissphere/todo-frontend:latest`
 
-## 📄 许可证
+```bash
+docker pull chrissphere/todo-backend:latest
+docker pull chrissphere/todo-frontend:latest
+```
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📝 License
 
 MIT License
 
-## 👥 贡献
+## 👤 作者
 
-欢迎提交 Issue 和 Pull Request！
+Creed (chrissphere)
+
+---
+
+**Star ⭐ 这个项目如果对你有帮助！**
