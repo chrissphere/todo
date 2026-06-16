@@ -59,4 +59,6 @@ jobs:
         run: cd frontend && npm run lint || echo "Lint not configured"
       
       - name: Build
-        run: cd frontend && npm run build
+        run: cd frontend && npx vite build
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096

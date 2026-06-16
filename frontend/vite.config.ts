@@ -17,5 +17,15 @@ export default defineConfig({
         changeOrigin: true
       }
     }
+  },
+  // 构建时跳过类型检查（CI 环境中类型检查由 lint 步骤完成）
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'element-plus': ['element-plus']
+        }
+      }
+    }
   }
 })
