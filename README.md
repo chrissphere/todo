@@ -3,7 +3,7 @@
 类似滴答清单的任务管理系统 - 支持任务管理、清单分类、优先级、提醒、重复任务等功能。
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/chrissphere/todo/ci.yml?branch=main)
-![Docker Pulls](https://img.shields.io/docker/pulls/chrissphere/todo-backend)
+![GitHub Container Registry](https://img.shields.io/badge/container-ghcr.io-blue)
 ![License](https://img.shields.io/github/license/chrissphere/todo)
 
 ## ✨ 功能特性
@@ -151,12 +151,19 @@ npm run format
 
 ## 📦 Docker 镜像
 
-- Backend: `chrissphere/todo-backend:latest`
-- Frontend: `chrissphere/todo-frontend:latest`
+使用 GitHub Container Registry (GHCR)：
+
+- Backend: `ghcr.io/chrissphere/todo-backend:latest`
+- Frontend: `ghcr.io/chrissphere/todo-frontend:latest`
 
 ```bash
-docker pull chrissphere/todo-backend:latest
-docker pull chrissphere/todo-frontend:latest
+# 拉取镜像
+docker pull ghcr.io/chrissphere/todo-backend:latest
+docker pull ghcr.io/chrissphere/todo-frontend:latest
+
+# 运行
+docker run -d -p 8000:8000 ghcr.io/chrissphere/todo-backend:latest
+docker run -d -p 80:80 ghcr.io/chrissphere/todo-frontend:latest
 ```
 
 ## 🤝 贡献

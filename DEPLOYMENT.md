@@ -52,7 +52,7 @@ npm run dev
    - 安装 Docker 和 Docker Compose
    - 开放端口 80 (前端) 和 8000 (后端 API)
 
-2. **配置环境变量**
+2. **配置环境变量（可选）**
 
 创建 `.env` 文件：
 ```bash
@@ -62,10 +62,6 @@ DATABASE_URL=postgresql://user:password@localhost:5432/todo
 # 安全
 SECRET_KEY=your-secret-key-here
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-# Docker Hub（如果需要推送）
-DOCKER_USERNAME=your-username
-DOCKER_TOKEN=your-token
 ```
 
 3. **部署**
@@ -111,25 +107,20 @@ server {
 
 ### 方案 2：GitHub Actions 自动部署
 
-1. **配置 Secrets**
+1. **无需配置 Secrets**
 
-在 GitHub 仓库设置中添加：
-- `DOCKER_USERNAME` - Docker Hub 用户名
-- `DOCKER_TOKEN` - Docker Hub access token
-- `SERVER_HOST` - 服务器 IP（可选，用于自动部署）
-- `SERVER_USERNAME` - 服务器用户名（可选）
-- `SSH_PRIVATE_KEY` - SSH 私钥（可选）
+使用 GitHub Container Registry (GHCR) 不需要额外配置 secrets，GitHub 会自动使用 `GITHUB_TOKEN`。
 
 2. **自动构建和推送**
 
 每次 push 到 main 分支会自动：
 - 构建前后端 Docker 镜像
-- 推送到 Docker Hub
+- 推送到 GitHub Container Registry (GHCR)
 - 标签格式：
-  - `chrissphere/todo-backend:main`
-  - `chrissphere/todo-backend:sha-abc123`
-  - `chrissphere/todo-frontend:main`
-  - `chrissphere/todo-frontend:sha-abc123`
+  - `ghcr.io/chrissphere/todo-backend:main`
+  - `ghcr.io/chrissphere/todo-backend:sha-abc123`
+  - `ghcr.io/chrissphere/todo-frontend:main`
+  - `ghcr.io/chrissphere/todo-frontend:sha-abc123`
 
 3. **自动部署（需要配置 SSH）**
 
@@ -139,13 +130,15 @@ server {
 
 ### 方案 3：云平台部署
 
-#### Docker Hub + Railway/Render/Fly.io
+#### GHCR + Railway/Render/Fly.io
 
-1. 推送镜像到 Docker Hub（CI 自动完成）
+1. 推送镜像到 GHCR（CI 自动完成）
 2. 在云平台创建应用，指定镜像：
-   - Backend: `chrissphere/todo-backend:main`
-   - Frontend: `chrissphere/todo-frontend:main`
+   - Backend: `ghcr.io/chrissphere/todo-backend:main`
+   - Frontend: `ghcr.io/chrissphere/todo-frontend:main`
 3. 配置环境变量和数据库连接
+
+注意：部分云平台需要从 GHCR 拉取镜像的权限，可能需要配置 Docker Hub 镜像同步。
 
 #### Kubernetes
 
