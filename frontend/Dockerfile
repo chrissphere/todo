@@ -2,11 +2,11 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# 复制 package.json
-COPY package.json ./
+# 复制 package.json 和 package-lock.json
+COPY package.json package-lock.json ./
 
-# 安装依赖
-RUN npm install
+# 安装依赖（使用 ci 确保与本地一致）
+RUN npm ci --silent
 
 # 复制源代码
 COPY . .
